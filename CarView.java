@@ -1,3 +1,7 @@
+package lab2_old;
+
+
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -28,6 +32,9 @@ public class CarView extends JFrame{
     JSpinner gasSpinner = new JSpinner();
     int gasAmount = 0;
     JLabel gasLabel = new JLabel("Amount of gas");
+
+    JButton turnLeftButton = new JButton("TurnLeft");
+    JButton turnRightButton = new JButton("TurnRight");
 
     JButton gasButton = new JButton("Gas");
     JButton brakeButton = new JButton("Brake");
@@ -83,6 +90,8 @@ public class CarView extends JFrame{
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
+        controlPanel.add(turnLeftButton, 6);
+        controlPanel.add(turnRightButton, 7);
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
@@ -107,6 +116,42 @@ public class CarView extends JFrame{
                 carC.gas(gasAmount);
             }
         });
+        brakeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.brake(gasAmount);
+            }
+        });
+        turnLeftButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                carC.turnLeft();
+            }
+        });
+        turnRightButton.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                carC.turnRight();
+            }
+        });
+        turboOnButton.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                carC.turboOn();
+            }
+        });
+        turboOffButton.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                carC.turboOff();
+            }
+        });
+        startButton.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                carC.startEngine();
+            }
+        });
+
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();

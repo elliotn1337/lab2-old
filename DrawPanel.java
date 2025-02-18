@@ -1,3 +1,4 @@
+package lab2_old;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
