@@ -1,6 +1,5 @@
 package lab2_old;
-
-
+import labb1_objekt.Vehicle;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -29,9 +28,13 @@ public class CarView extends JFrame{
     JPanel controlPanel = new JPanel();
 
     JPanel gasPanel = new JPanel();
+    JPanel angPanel = new JPanel();
     JSpinner gasSpinner = new JSpinner();
+    JSpinner angSpinner = new JSpinner();
     int gasAmount = 0;
+    int angAmount = 0;
     JLabel gasLabel = new JLabel("Amount of gas");
+    JLabel angLabel = new JLabel("Preffered anglus");
 
     JButton turnLeftButton = new JButton("TurnLeft");
     JButton turnRightButton = new JButton("TurnRight");
@@ -40,7 +43,7 @@ public class CarView extends JFrame{
     JButton brakeButton = new JButton("Brake");
     JButton turboOnButton = new JButton("Saab Turbo on");
     JButton turboOffButton = new JButton("Saab Turbo off");
-    JButton liftBedButton = new JButton("Scania Lift Bed");
+    JButton scaniaRaiseButton = new JButton("Scania Lift Bed");
     JButton lowerBedButton = new JButton("Lower Lift Bed");
 
     JButton startButton = new JButton("Start all cars");
@@ -76,17 +79,33 @@ public class CarView extends JFrame{
             }
         });
 
+        SpinnerModel angModel =
+                new SpinnerNumberModel(0, //initial value
+                        0, //min
+                        100, //max
+                        1);//step
+
+
+        angSpinner = new JSpinner(angModel);
+        angSpinner.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                angAmount = (int) ((JSpinner)e.getSource()).getValue();
+            }
+        });
         gasPanel.setLayout(new BorderLayout());
         gasPanel.add(gasLabel, BorderLayout.PAGE_START);
         gasPanel.add(gasSpinner, BorderLayout.PAGE_END);
+        angPanel.add(angLabel, BorderLayout.WEST);
+        angPanel.add(angSpinner, BorderLayout.EAST);
 
         this.add(gasPanel);
+        this.add(angPanel);
 
         controlPanel.setLayout(new GridLayout(2,4));
 
         controlPanel.add(gasButton, 0);
         controlPanel.add(turboOnButton, 1);
-        controlPanel.add(liftBedButton, 2);
+        controlPanel.add(scaniaRaiseButton, 2);
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
@@ -111,18 +130,17 @@ public class CarView extends JFrame{
         // This actionListener is for the gas button only
         // TODO: Create more for each component as necessary
         gasButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 carC.gas(gasAmount);
             }
         });
         brakeButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 carC.brake(gasAmount);
             }
         });
         turnLeftButton.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 carC.turnLeft();
             }
@@ -147,11 +165,23 @@ public class CarView extends JFrame{
         });
         startButton.addActionListener(new ActionListener() {
 
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e){
                 carC.startEngine();
             }
         });
+        stopButton.addActionListener(new ActionListener() {
 
+            public void actionPerformed(ActionEvent e) {
+                carC.stopEngine();
+            }
+        });
+        scaniaRaiseButton.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+
+
+            }
+        });
 
         // Make the frame pack all it's components by respecting the sizes if possible.
         this.pack();

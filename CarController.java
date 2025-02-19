@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class CarController{
     // member fields:
-
+    boolean running = false;
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
     // The timer is started with a listener (see below) that executes the statements
@@ -25,19 +25,24 @@ public class CarController{
     // A list of cars, modify if needed
     ArrayList<Vehicle> cars = new ArrayList<>();
 
+
     //methods:
 
     public static void main(String[] args) {
         // Instance of this class
         CarController cc = new CarController();
 
-        cc.cars.add(new Volvo240());
+        cc.cars.add(new Saab95(0, 100));
+        cc.cars.add(new Scania(0, 200));
+        cc.cars.add(new Volvo240(0,0));
+
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
 
         // Start the timer
         cc.timer.start();
+
     }
 
     /* Each step the TimerListener moves all the cars in the list and tells the
@@ -49,55 +54,59 @@ public class CarController{
                 car.move();
                 int x = (int) Math.round(car.getX());
                 int y = (int) Math.round(car.getY());
-                frame.drawPanel.moveit(x, y);
+                System.out.printf("%s\t%s\n", car.getClass(), car.getEnginePower());
+                frame.drawPanel.moveit(car, x, y);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
+                if (car.getX() < 0 || car.getX() > 800 || car.getY() < 0 || car.getY() > 800) {
+                    //if (car instanceof Volvo240 && car.getX()
+
+                    car.turnLeft();
+                    car.turnLeft();
+                    //car.stopEngine();
+                }
             }
         }
     }
-
     // Calls the gas method for each car once
     void gas(int amount) {
+        if (running){
         double gas = ((double) amount) / 100;
-        for (Vehicle car : cars
-                ) {
+        for (Vehicle car : cars) {
             car.gas(gas);
-        }
+        }}
     }
     void brake(int amount) {
+        if (running){
         double brake = ((double) amount) / 100;
         for (Vehicle car : cars
         ) {
             car.brake(brake);
-        }
+        }}
     }
-    void turnLeft() {
-        for (Vehicle car : cars
-        ) {
-            car.turnLeft();
-        }
-    }
-    void turnRight() {
-        for (Vehicle car : cars
-        ) {
-            car.turnRight();
-        }
-    }
-    void turboOn() {
-        for (Vehicle car : cars
-        ) { if (car instanceof Saab95){
-            ((Saab95) car).setTurboOn();}
-        }
-    }
-    void turboOff() {
-        for (Vehicle car : cars
-        ) { if (car instanceof Saab95){
-            ((Saab95) car).setTurboOff();}
-        }
-    }
+    void turnLeft() {for (Vehicle car : cars) {car.turnLeft();}}
+    void turnRight() {for (Vehicle car : cars) {car.turnRight();}}
+    void turboOn() {for (Vehicle car : cars) { if (car instanceof Saab95){((Saab95) car).setTurboOn();}}}
+    void turboOff() {for (Vehicle car : cars) { if (car instanceof Saab95){((Saab95) car).setTurboOff();}}}
     void startEngine(){
-        for (Vehicle car : cars
-        ) { car.startEngine();}
+        for (Vehicle car : cars) {
+            if (!(running)){car.startEngine(); running = true;}}}
+    void stopEngine(){for (Vehicle car : cars) { car.stopEngine(); running = false;}}
+
+
+    void raise(int amount) {
+        for (Vehicle car : cars) {
+            if (car instanceof Scania scania) {
+                scania.raise(amount);
+            }
         }
-    
+    }
+
+    void lower(int amount){
+        for (Vehicle car: cars){
+            if (car instanceof Scania scania){
+                scania.lower(amount);
+            }
+        }
+    }
 }
