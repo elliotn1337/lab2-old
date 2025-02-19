@@ -24,7 +24,8 @@ public class CarController{
     CarView frame;
     // A list of cars, modify if needed
     ArrayList<Vehicle> cars = new ArrayList<>();
-
+    Garage<Volvo240> garage;
+    
 
     //methods:
 
@@ -35,6 +36,7 @@ public class CarController{
         cc.cars.add(new Saab95(0, 100));
         cc.cars.add(new Scania(0, 200));
         cc.cars.add(new Volvo240(0,0));
+        cc.garage = new Garage<Volvo240>();
 
 
         // Start a new view and send a reference of self
@@ -51,19 +53,30 @@ public class CarController{
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             for (Vehicle car : cars) {
+
                 car.move();
                 int x = (int) Math.round(car.getX());
                 int y = (int) Math.round(car.getY());
-                System.out.printf("%s\t%s\n", car.getClass(), car.getEnginePower());
+                System.out.printf("%s\t%s\n", car.getClass(), car.getCurrentSpeed());
                 frame.drawPanel.moveit(car, x, y);
                 // repaint() calls the paintComponent method of the panel
                 frame.drawPanel.repaint();
                 if (car.getX() < 0 || car.getX() > 800 || car.getY() < 0 || car.getY() > 800) {
                     //if (car instanceof Volvo240 && car.getX()
-
                     car.turnLeft();
                     car.turnLeft();
                     //car.stopEngine();
+                }
+
+                if (275.0 < car.getX() && car.getX() < 325.0 && 275 < car.getY() && car.getY() < 325){
+                    if (car instanceof Volvo240 v) {
+                        if (!garage.isLoaded(v)){
+                            garage.loadVehicle(v);
+                            v.stopEngine();
+
+                        }
+
+                    }
                 }
             }
         }
@@ -86,8 +99,14 @@ public class CarController{
     }
     void turnLeft() {for (Vehicle car : cars) {car.turnLeft();}}
     void turnRight() {for (Vehicle car : cars) {car.turnRight();}}
-    void turboOn() {for (Vehicle car : cars) { if (car instanceof Saab95){((Saab95) car).setTurboOn();}}}
-    void turboOff() {for (Vehicle car : cars) { if (car instanceof Saab95){((Saab95) car).setTurboOff();}}}
+    void turboOn() {for (Vehicle car : cars) {
+        if (car instanceof Saab95){
+            ((Saab95) car).setTurboOn();}}}
+
+    void turboOff() {for (Vehicle car : cars) {
+        if (car instanceof Saab95){
+            ((Saab95) car).setTurboOff();}}}
+
     void startEngine(){
         for (Vehicle car : cars) {
             if (!(running)){car.startEngine(); running = true;}}}
@@ -109,4 +128,5 @@ public class CarController{
             }
         }
     }
+
 }

@@ -44,7 +44,7 @@ public class CarView extends JFrame{
     JButton turboOnButton = new JButton("Saab Turbo on");
     JButton turboOffButton = new JButton("Saab Turbo off");
     JButton scaniaRaiseButton = new JButton("Scania Lift Bed");
-    JButton lowerBedButton = new JButton("Lower Lift Bed");
+    JButton scaniaLowerButton = new JButton("Lower Lift Bed");
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
@@ -82,7 +82,7 @@ public class CarView extends JFrame{
         SpinnerModel angModel =
                 new SpinnerNumberModel(0, //initial value
                         0, //min
-                        100, //max
+                        70, //max
                         1);//step
 
 
@@ -108,7 +108,7 @@ public class CarView extends JFrame{
         controlPanel.add(scaniaRaiseButton, 2);
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
-        controlPanel.add(lowerBedButton, 5);
+        controlPanel.add(scaniaLowerButton, 5);
         controlPanel.add(turnLeftButton, 6);
         controlPanel.add(turnRightButton, 7);
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
@@ -177,10 +177,13 @@ public class CarView extends JFrame{
         });
         scaniaRaiseButton.addActionListener(new ActionListener() {
 
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {carC.raise(angAmount);}
 
+        });
+        scaniaLowerButton.addActionListener(new ActionListener() {
 
-            }
+            public void actionPerformed(ActionEvent e) {carC.lower(angAmount);}
+
         });
 
         // Make the frame pack all it's components by respecting the sizes if possible.
