@@ -25,9 +25,8 @@ public class CarController{
     // A list of cars, modify if needed
     ArrayList<Vehicle> cars = new ArrayList<>();
     Garage<Volvo240> garage;
-    
 
-    //methods:
+        //methods:
 
     public static void main(String[] args) {
         // Instance of this class
@@ -70,13 +69,15 @@ public class CarController{
 
                 if (275.0 < car.getX() && car.getX() < 325.0 && 275 < car.getY() && car.getY() < 325){
                     if (car instanceof Volvo240 v) {
-                        if (!garage.isLoaded(v)){
+                        if (!car.getIsLoaded()){
                             garage.loadVehicle(v);
+                            ((Volvo240) car).setX(300);
+                            car.setY(300);
                             v.stopEngine();
 
                         }
-
                     }
+
                 }
             }
         }
@@ -111,8 +112,6 @@ public class CarController{
         for (Vehicle car : cars) {
             if (!(running)){car.startEngine(); running = true;}}}
     void stopEngine(){for (Vehicle car : cars) { car.stopEngine(); running = false;}}
-
-
     void raise(int amount) {
         for (Vehicle car : cars) {
             if (car instanceof Scania scania) {
@@ -120,7 +119,6 @@ public class CarController{
             }
         }
     }
-
     void lower(int amount){
         for (Vehicle car: cars){
             if (car instanceof Scania scania){

@@ -2,19 +2,15 @@ package lab2_old;
 import labb1_objekt.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.awt.Point;
-import java.util.HashMap;
-import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.util.Map;
+
 
 // This panel represents the animated part of the view with the car images.
 
 public class DrawPanel extends JPanel {
-    //private final HashMap<Class<? extends Vehicle>, Point> vehiclePoints = new HashMap<>();
 
     // Just a single image, TODO: Generalize
     BufferedImage volvoImage;
@@ -31,7 +27,7 @@ public class DrawPanel extends JPanel {
     Point scaniaPoint = new Point();
 
     // TODO: Make this general for all cars
-    void moveit(Vehicle car, int x, int y) {
+   void moveit(Vehicle car, int x, int y) {
         if (car instanceof Volvo240) {
             volvoPoint.x = x;
             volvoPoint.y = y;
